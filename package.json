@@ -8,9 +8,18 @@
 	},
 	"devDependencies": {
 		"@types/bun": "latest",
+		"@types/cookie-parser": "^1.4.8",
+		"@types/cors": "^2.8.17",
+		"@types/express": "^5.0.1",
 		"prettier": "^3.5.3"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
+	},
+	"dependencies": {
+		"@isaacs/ttlcache": "^1.4.1",
+		"cookie-parser": "^1.4.7",
+		"cors": "^2.8.5",
+		"express": "^5.1.0"
 	}
 }
