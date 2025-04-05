@@ -1,8 +1,9 @@
 {
-	"printWidth": 120,
+	"printWidth": 100,
 	"tabWidth": 4,
 	"useTabs": true,
 	"semi": true,
 	"singleQuote": true,
-	"trailingComma": "all"
+	"trailingComma": "all",
+	"plugins": ["prettier-plugin-ejs"]
 }

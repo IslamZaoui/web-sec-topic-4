@@ -3,7 +3,8 @@
 	"module": "src/index.ts",
 	"type": "module",
 	"scripts": {
-		"start": "bun --hot src/index.ts",
+		"dev": "bun --hot src/index.ts",
+		"typecheck": "bun --bun tsc --noEmit",
 		"format": "bun --bun prettier --write ."
 	},
 	"devDependencies": {
@@ -11,15 +12,17 @@
 		"@types/cookie-parser": "^1.4.8",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.1",
-		"prettier": "^3.5.3"
+		"prettier": "^3.5.3",
+		"prettier-plugin-ejs": "^1.0.3"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
 		"@isaacs/ttlcache": "^1.4.1",
-		"cookie-parser": "^1.4.7",
+		"cookie-es": "^2.0.0",
 		"cors": "^2.8.5",
+		"ejs": "^3.1.10",
 		"express": "^5.1.0"
 	}
 }
