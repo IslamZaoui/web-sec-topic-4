@@ -10,23 +10,8 @@
 			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 			crossorigin="anonymous"
 		></script>
-		<style>
-			body {
-				background-color: #09090b; /* Zinc-950 */
-			}
-		</style>
-		<script>
-			$(window).on('load', () => {
-				$('#logout-button').on('click', () => {
-					fetch('/api/logout', {
-						method: 'POST',
-						credentials: 'include',
-					}).then(() => {
-						location.reload();
-					});
-				});
-			});
-		</script>
+		<script src="/js/home.main.js"></script>
+		<link rel="stylesheet" href="/css/global.css" />
 	</head>
 	<body class="flex items-center justify-center min-h-screen px-4 text-zinc-100">
 		<div class="max-w-xl text-center space-y-6">

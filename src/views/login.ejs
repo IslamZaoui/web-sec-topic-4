@@ -10,46 +10,8 @@
 			integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
 			crossorigin="anonymous"
 		></script>
-		<style>
-			body {
-				background-color: #09090b; /* Zinc-950 */
-			}
-		</style>
-		<script>
-			$(document).ready(function () {
-				$('form').on('submit', function (event) {
-					event.preventDefault();
-
-					const username = $('#username').val();
-					const password = $('#password').val();
-
-					$.ajax({
-						url: '/api/login',
-						type: 'POST',
-						contentType: 'application/json',
-						data: JSON.stringify({ username, password }),
-						success: function (response) {
-							window.location.href = '/';
-						},
-						error: function (jqXHR) {
-							if (jqXHR.status === 400) {
-								$('#error-message').text('Invalid request. Please try again.');
-							} else if (jqXHR.status === 401) {
-								$('#error-message').text('Invalid username or password.');
-							} else if (jqXHR.status === 429) {
-								$('#error-message').text(
-									'Rate limit exceeded. Please try again later.',
-								);
-							} else {
-								$('#error-message').text(
-									'An unexpected error occurred. Please try again.',
-								);
-							}
-						},
-					});
-				});
-			});
-		</script>
+		<script src="/js/login.main.js"></script>
+		<link rel="stylesheet" href="/css/global.css" />
 	</head>
 	<body class="flex items-center justify-center min-h-screen px-4">
 		<div class="w-full max-w-sm p-6 bg-zinc-900 rounded-2xl shadow-lg">
