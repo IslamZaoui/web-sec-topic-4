@@ -1,4 +1,4 @@
-import { getCookie } from '@/helpers/cookie';
+import { getCookie } from '@/lib/helpers/cookie';
 import type { Request, Response } from 'express';
 import type { Session } from '@/lib/types';
 

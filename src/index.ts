@@ -1,11 +1,13 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
+
 import authMiddleware from '@/middlewares/auth.middleware';
+
 import loginHandler from '@/handlers/login.handler';
-import logoutHandler from './handlers/logout.handler';
+import logoutHandler from '@/handlers/logout.handler';
 import meHandler from '@/handlers/me.handler';
+
 import homePage from '@/pages/home.page';
 import loginPage from '@/pages/login.page';
 import profilePage from '@/pages/profile.page';
@@ -17,7 +19,6 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	.set('view engine', 'ejs')
 	.use(authMiddleware())
 	.use(express.json())
-	.use(cookieParser())
 	.use(
 		cors({
 			origin: 'http://localhost:3000',
