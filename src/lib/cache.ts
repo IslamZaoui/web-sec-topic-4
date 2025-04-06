@@ -2,7 +2,7 @@ import TTLCache from '@isaacs/ttlcache';
 
 const cache = new TTLCache<string, number>({
 	max: 1000,
-	ttl: 1000 * 60 * 15, // 15 minutes
+	ttl: 1000 * 60 * 60, // 1 hour
 });
 
 export const RATE_LIMITER_KV = {

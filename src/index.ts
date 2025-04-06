@@ -14,6 +14,7 @@ import profilePage from '@/pages/profile.page';
 
 const app = express();
 
+// middlewares
 app.use(express.static(path.resolve(__dirname, 'static')))
 	.set('views', path.resolve(__dirname, 'views'))
 	.set('view engine', 'ejs')
@@ -26,10 +27,12 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 		}),
 	);
 
+// handlers
 app.post('/api/login', loginHandler())
 	.post('/api/logout', logoutHandler())
 	.get('/api/me', meHandler());
 
+// server rendered pages
 app.get('/', homePage()).get('/login', loginPage()).get('/profile', profilePage());
 
 const PORT = 3000;
