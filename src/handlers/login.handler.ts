@@ -1,6 +1,6 @@
+import { db } from '@/lib/database';
 import { authCookie } from '@/lib/auth/cookie';
 import { createSession } from '@/lib/auth/session';
-import { userTable } from '@/lib/db';
 import { rateLimiter } from '@/lib/rate-limiter';
 import type { ExpressHandler, User } from '@/lib/types';
 
@@ -28,7 +28,7 @@ export default function loginHandler(): ExpressHandler {
 		}
 
 		// check if user exists
-		const user = await userTable.select.by.username(username);
+		const user = db.user.select.by.username(username);
 		if (!user) {
 			res.status(401).json({
 				code: 'INVALID_CREDENTIALS',

@@ -1,4 +1,3 @@
-import { userTable } from '@/lib/db';
 import type { ExpressHandler, SessionValidationResult } from '@/lib/types';
 
 export default function meHandler(): ExpressHandler {
@@ -12,18 +11,9 @@ export default function meHandler(): ExpressHandler {
 			return;
 		}
 
-		const user = await userTable.select.by.id(session.user.id);
-		if (!user) {
-			res.status(401).json({
-				code: 'UNAUTHORIZED',
-				message: 'Unauthorized',
-			});
-			return;
-		}
-
 		res.status(200).json({
-			id: user.id,
-			username: user.username,
+			id: session.user.id,
+			username: session.user.username,
 		});
 	};
 }
