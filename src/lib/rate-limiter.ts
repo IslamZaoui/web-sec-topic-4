@@ -1,25 +1,36 @@
+import TTLCache from '@isaacs/ttlcache';
 import type { Request } from 'express';
-import { RATE_LIMITER_KV } from './cache';
+
+// create rate limit cache
+const cache = new TTLCache<string, number>({
+	max: 1000,
+	ttl: 1000 * 60 * 60, // 1 hour
+});
 
 export const rateLimiter = {
 	check: (req: Request, prefix: string) => {
 		// create user identifier
 		const requesterID = `${prefix}-${req.ip || 'unknown'}`;
 
-		// get user's rate count from cache
-		const count = RATE_LIMITER_KV.get(requesterID);
+		// get user's rate attempts from cache
+		const count = cache.get(requesterID) || 0;
 
 		// check if user is rate limited
 		if (count >= 5) {
 			return true;
 		}
-		
-		// increment user's rate count in cache
-		RATE_LIMITER_KV.set(requesterID, count + 1);
+
+		// increment user's rate attempts in cache
+		cache.set(requesterID, count + 1);
 		return false;
 	},
-	reset: () => {
+	reset: (/* req: Request, prefix: string */) => {
 		// clear rate limit cache
-		RATE_LIMITER_KV.clear();
+		cache.clear();
+
+		/*  fix to the broken brute-force protection
+			const requesterID = `${prefix}-${req.ip || 'unknown'}`;
+			cache.delete(requesterID)
+		*/
 	},
 };

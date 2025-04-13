@@ -10,7 +10,7 @@ export default function authMiddleware(): ExpressMiddleware {
 			return;
 		}
 
-		const session = await validateSession(sessionId);
+		const session = validateSession(sessionId);
 		if (!session) {
 			authCookie.clear(res);
 			next();

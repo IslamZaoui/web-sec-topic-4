@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	$('form').on('submit', function (event) {
+	$('form').on('submit', (event) => {
 		event.preventDefault();
 
 		const username = $('#username').val();
@@ -10,16 +10,12 @@ $(document).ready(function () {
 			type: 'POST',
 			contentType: 'application/json',
 			data: JSON.stringify({ username, password }),
-			success: function (response) {
+			success: () => {
 				window.location.href = '/';
 			},
-			error: function (jqXHR) {
-				if (jqXHR.status === 400) {
-					$('#error-message').text('Invalid request. Please try again.');
-				} else if (jqXHR.status === 401) {
-					$('#error-message').text('Invalid username or password.');
-				} else if (jqXHR.status === 429) {
-					$('#error-message').text('Rate limit exceeded. Please try again later.');
+			error: (jqXHR) => {
+				if (jqXHR.status >= 400 && jqXHR.status < 500) {
+					$('#error-message').text(jqXHR.responseJSON.message);
 				} else {
 					$('#error-message').text('An unexpected error occurred. Please try again.');
 				}

@@ -15,10 +15,13 @@ export default function loginHandler(): ExpressHandler {
 			return;
 		}
 
+		// get request body
 		const { username, password } = req.body as Omit<User, 'id'>;
 
 		// check if user is rate limited
 		const isRateLimited = rateLimiter.check(req, username);
+
+		// block if user is rate limited
 		if (isRateLimited) {
 			res.status(429).json({
 				code: 'RATE_LIMIT_EXCEEDED',
@@ -31,15 +34,15 @@ export default function loginHandler(): ExpressHandler {
 		const user = db.user.select.by.username(username);
 		if (!user) {
 			res.status(401).json({
-				code: 'INVALID_CREDENTIALS',
-				message: 'Invalid username or password',
+				code: 'INVALID_USERNAME',
+				message: 'Invalid username',
 			});
 			return;
 		}
 		if (user.password !== password) {
 			res.status(401).json({
-				code: 'INVALID_CREDENTIALS',
-				message: 'Invalid username or password',
+				code: 'INVALID_PASSWORD',
+				message: 'Invalid password',
 			});
 			return;
 		}
@@ -48,7 +51,7 @@ export default function loginHandler(): ExpressHandler {
 		rateLimiter.reset();
 
 		// create session
-		const session = await createSession(user.id);
+		const session = createSession(user.id);
 
 		// set session cookie
 		authCookie.set(res, session);

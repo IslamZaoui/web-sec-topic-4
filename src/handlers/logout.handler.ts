@@ -14,7 +14,7 @@ export default function logoutHandler(): ExpressHandler {
 			return;
 		}
 
-		await invalidateSession(session.id);
+		invalidateSession(session.id);
 		authCookie.clear(res);
 
 		res.status(200).send('Logged out successfully');

@@ -5,8 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "bun --hot src/index.ts",
-		"typecheck": "bun --bun tsc --noEmit",
-		"format": "bun --bun prettier --write ."
+		"typecheck": "tsc --noEmit",
+		"format": "prettier --write ."
 	},
 	"dependencies": {
 		"@isaacs/ttlcache": "^1.4.1",

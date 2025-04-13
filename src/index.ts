@@ -6,7 +6,6 @@ import authMiddleware from '@/middlewares/auth.middleware';
 
 import loginHandler from '@/handlers/login.handler';
 import logoutHandler from '@/handlers/logout.handler';
-import meHandler from '@/handlers/me.handler';
 
 import homePage from '@/pages/home.page';
 import loginPage from '@/pages/login.page';
@@ -28,9 +27,7 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	);
 
 // handlers
-app.post('/api/login', loginHandler())
-	.post('/api/logout', logoutHandler())
-	.get('/api/me', meHandler());
+app.post('/api/login', loginHandler()).post('/api/logout', logoutHandler());
 
 // server rendered pages
 app.get('/', homePage()).get('/login', loginPage()).get('/profile', profilePage());
