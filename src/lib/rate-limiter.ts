@@ -16,7 +16,7 @@ export const rateLimiter = {
 		const count = cache.get(requesterID) || 0;
 
 		// check if user is rate limited
-		if (count >= 5) {
+		if (count > 5) {
 			return true;
 		}
 
