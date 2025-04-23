@@ -24,7 +24,9 @@ export const db = {
 		delete: {
 			by: {
 				id: (id: number) => {
-					return client.prepare('DELETE FROM users WHERE id = ? returning *').get(id) as User | null;
+					return client
+						.prepare('DELETE FROM users WHERE id = ? returning *')
+						.get(id) as User | null;
 				},
 			},
 		},

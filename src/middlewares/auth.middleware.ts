@@ -6,18 +6,16 @@ export default function authMiddleware(): ExpressMiddleware {
 	return async (req, res, next) => {
 		const sessionId = authCookie.get(req);
 		if (!sessionId) {
-			next();
-			return;
+			return next();
 		}
 
 		const session = validateSession(sessionId);
 		if (!session) {
 			authCookie.clear(res);
-			next();
-			return;
+			return next();
 		}
 
 		res.locals.session = session;
-		next();
+		return next();
 	};
 }

@@ -17,4 +17,3 @@ export default function formatSeconds(seconds: number): string {
 
 	return parts.join(' and ');
 }
-

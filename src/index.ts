@@ -8,7 +8,6 @@ import routeProtectionMiddleware from '@/middlewares/route-protection-middleware
 
 import loginHandler from '@/handlers/login.handler';
 import logoutHandler from '@/handlers/logout.handler';
-import deleteUserHandler from '@/handlers/delete-user.handler';
 
 import homePage from '@/pages/home.page';
 import loginPage from '@/pages/login.page';
@@ -33,9 +32,7 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	);
 
 // handlers
-app.post('/api/login', loginHandler())
-	.post('/api/logout', logoutHandler())
-	.delete('/api/users/:id', deleteUserHandler());
+app.post('/api/login', loginHandler()).post('/api/logout', logoutHandler());
 
 // server rendered pages
 app.get('/', homePage())
