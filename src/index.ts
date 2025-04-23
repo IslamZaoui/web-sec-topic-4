@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'url';
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
@@ -13,6 +14,9 @@ import homePage from '@/pages/home.page';
 import loginPage from '@/pages/login.page';
 import profilePage from '@/pages/profile.page';
 import adminPage from '@/pages/admin.page';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 

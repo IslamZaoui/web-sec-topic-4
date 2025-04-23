@@ -1,9 +1,9 @@
 import { client } from './index';
-import type { Database } from 'bun:sqlite';
+import type { Database } from 'better-sqlite3';
 
 export function migrate(db: Database) {
 	// Create users table
-	client.run(`
+	db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY,
       username TEXT NOT NULL UNIQUE,
@@ -12,7 +12,7 @@ export function migrate(db: Database) {
   `);
 
 	// Create sessions table
-	client.run(`
+	db.exec(`
     CREATE TABLE IF NOT EXISTS sessions (
       id TEXT PRIMARY KEY,
       userId INTEGER NOT NULL,

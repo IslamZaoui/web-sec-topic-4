@@ -1,5 +1,5 @@
 import type { User, Session } from '@/lib/types';
-import { Database } from 'bun:sqlite';
+import Database from 'better-sqlite3';
 import { migrate } from './migration';
 
 export const client = new Database('database.sqlite');
