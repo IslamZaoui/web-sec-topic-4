@@ -3,6 +3,8 @@ import path from 'path';
 import cors from 'cors';
 
 import authMiddleware from '@/middlewares/auth.middleware';
+import originalUrlMiddleware from '@/middlewares/original-url.middleware';
+import routeProtectionMiddleware from '@/middlewares/route-protection-middleware';
 
 import loginHandler from '@/handlers/login.handler';
 import logoutHandler from '@/handlers/logout.handler';
@@ -20,6 +22,8 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	.set('views', path.resolve(__dirname, 'views'))
 	.set('view engine', 'ejs')
 	.use(authMiddleware())
+	.use(originalUrlMiddleware())
+	.use(routeProtectionMiddleware())
 	.use(express.json())
 	.use(
 		cors({
@@ -29,10 +33,15 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	);
 
 // handlers
-app.post('/api/login', loginHandler()).post('/api/logout', logoutHandler()).delete('/api/users/:id', deleteUserHandler());
+app.post('/api/login', loginHandler())
+	.post('/api/logout', logoutHandler())
+	.delete('/api/users/:id', deleteUserHandler());
 
 // server rendered pages
-app.get('/', homePage()).get('/login', loginPage()).get('/profile', profilePage()).get('/admin', adminPage());
+app.get('/', homePage())
+	.get('/login', loginPage())
+	.get('/profile', profilePage())
+	.get('/admin', adminPage());
 
 const PORT = 3000;
 app.listen(PORT, () => {
