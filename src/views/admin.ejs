@@ -14,7 +14,12 @@
 			<h1 class="text-3xl font-bold text-zinc-100 text-center">Admin Panel</h1>
 			<div class="bg-zinc-900 p-6 rounded-lg shadow-lg">
 				<h2 class="text-2xl font-semibold text-zinc-100 mb-4">Users</h2>
-				<div id="error-message" class="text-red-500 mb-4 text-center"></div>
+				<% if(message){ %>
+				<div class="text-green-500 mb-4 text-center"><%= message %></div>
+				<% } %>
+				<% if(error){ %>
+				<div class="text-red-500 mb-4 text-center"><%= error %></div>
+				<% } %>
 				<div class="overflow-x-auto">
 					<table class="w-full">
 						<thead>
@@ -30,7 +35,7 @@
 								<td class="py-3"><%= user.id %></td>
 								<td class="py-3"><%= user.username %></td>
 								<td class="py-3">
-									<button class="delete-user-btn px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors" data-user-id="<%= user.id %>">Delete</button>
+									<a href="/admin?delete-user=<%= user.id %>" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">Delete</a>
 								</td>
 							</tr>
 							<% }); %>

@@ -1,36 +1,36 @@
 import TTLCache from '@isaacs/ttlcache';
 import type { Request } from 'express';
 
+type RateLimitData = {
+	count: number;
+	timestamp: number;
+};
+
 // create rate limit cache
-const cache = new TTLCache<string, number>({
+const cache = new TTLCache<string, RateLimitData>({
 	max: 1000,
-	ttl: 1000 * 60 * 60, // 1 hour
+	ttl: 1000 * 60 * 15, // 15 minutes
 });
 
 export const rateLimiter = {
-	check: (req: Request, prefix: string) => {
-		// create user identifier
-		const requesterID = `${prefix}-${req.ip || 'unknown'}`;
-
+	check: (req: Request) => {
+		const key = req.ip || 'unknown';
 		// get user's rate attempts from cache
-		const count = cache.get(requesterID) || 0;
+		const { count, timestamp } = cache.get(key) || { count: 0, timestamp: Date.now() };
 
 		// check if user is rate limited
-		if (count > 5) {
-			return true;
+		if (count >= 3) {
+			const timeElapsed = Date.now() - timestamp;
+			const timeRemaining = Math.max(0, 1000 * 60 * 15 - timeElapsed);
+			const secondsRemaining = Math.floor(timeRemaining / 1000);
+			return { isLimited: true, secondsRemaining };
 		}
 
 		// increment user's rate attempts in cache
-		cache.set(requesterID, count + 1);
-		return false;
+		cache.set(key, { count: count + 1, timestamp });
+		return { isLimited: false, secondsRemaining: 0 };
 	},
-	reset: (/* req: Request, prefix: string */) => {
-		// clear rate limit cache
-		cache.clear();
-
-		/*  fix to the broken brute-force protection
-			const requesterID = `${prefix}-${req.ip || 'unknown'}`;
-			cache.delete(requesterID)
-		*/
+	reset: (req: Request) => {
+		cache.delete(req.ip || 'unknown');
 	},
 };

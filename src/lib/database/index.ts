@@ -21,6 +21,13 @@ export const db = {
 						.get(username) as User | null,
 			},
 		},
+		delete: {
+			by: {
+				id: (id: number) => {
+					return client.prepare('DELETE FROM users WHERE id = ? returning *').get(id) as User | null;
+				},
+			},
+		},
 	},
 	session: {
 		select: {

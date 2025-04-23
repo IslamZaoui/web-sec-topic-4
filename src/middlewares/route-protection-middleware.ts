@@ -2,7 +2,7 @@ import createRouteMatcher from '@/lib/helpers/route-matcher';
 import type { ExpressMiddleware, SessionValidationResult } from '@/lib/types';
 
 const guestRoutes = createRouteMatcher(['/login', '/api/login']);
-const adminRoutes = createRouteMatcher(['/admin', '/api/users/*']);
+const adminRoutes = createRouteMatcher(['/admin']);
 const userRoutes = createRouteMatcher(['/profile', '/api/logout']);
 
 export default function routeProtectionMiddleware(): ExpressMiddleware {

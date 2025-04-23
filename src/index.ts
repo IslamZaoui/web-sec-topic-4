@@ -21,8 +21,8 @@ const app = express();
 app.use(express.static(path.resolve(__dirname, 'static')))
 	.set('views', path.resolve(__dirname, 'views'))
 	.set('view engine', 'ejs')
-	.use(authMiddleware())
 	.use(originalUrlMiddleware())
+	.use(authMiddleware())
 	.use(routeProtectionMiddleware())
 	.use(express.json())
 	.use(

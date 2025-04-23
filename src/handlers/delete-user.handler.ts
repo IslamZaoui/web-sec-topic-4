@@ -1,4 +1,4 @@
-import { client, db } from '@/lib/database';
+import { db } from '@/lib/database';
 import type { ExpressHandler } from '@/lib/types';
 
 export default function deleteUserHandler(): ExpressHandler {
@@ -31,7 +31,7 @@ export default function deleteUserHandler(): ExpressHandler {
 		}
 
 		// Delete the user
-		client.prepare('DELETE FROM users WHERE id = ?').run(userId);
+		db.user.delete.by.id(userId);
 		res.status(200).json({ message: 'User deleted successfully' });
 	};
 }

@@ -1,3 +1,7 @@
-# Topic 4: Broken brute-force protection, IP block
+# Assignment #2
 
-Build and conduct penetration testing on an application that is vulnerable due to a logic flaw in its password brute-force protection.
+## Topic 4: URL-based access control can be circumvented
+
+This website has an unauthenticated admin panel at /admin, but a front-end system has been configured to block external access to that path. However, the back-end application is built on a framework that supports the X-Original-URL header.
+
+Objective: access the admin panel and delete the user carlos.

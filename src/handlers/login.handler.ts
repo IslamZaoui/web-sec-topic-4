@@ -3,6 +3,7 @@ import { authCookie } from '@/lib/auth/cookie';
 import { createSession } from '@/lib/auth/session';
 import { rateLimiter } from '@/lib/rate-limiter';
 import type { ExpressHandler, User } from '@/lib/types';
+import formatSeconds from '@/lib/helpers/time';
 
 export default function loginHandler(): ExpressHandler {
 	return async (req, res) => {
@@ -19,13 +20,13 @@ export default function loginHandler(): ExpressHandler {
 		const { username, password } = req.body as Omit<User, 'id'>;
 
 		// check if user is rate limited
-		const isRateLimited = rateLimiter.check(req, username);
+		const { isLimited, secondsRemaining } = rateLimiter.check(req);
 
 		// block if user is rate limited
-		if (isRateLimited) {
+		if (isLimited) {
 			res.status(429).json({
 				code: 'RATE_LIMIT_EXCEEDED',
-				message: 'Rate limit exceeded',
+				message: `Too many requests. Try again in ${formatSeconds(secondsRemaining)}`,
 			});
 			return;
 		}
@@ -48,7 +49,7 @@ export default function loginHandler(): ExpressHandler {
 		}
 
 		// reset the limiter "the broken brute-force protection here"
-		rateLimiter.reset();
+		rateLimiter.reset(req);
 
 		// create session
 		const session = createSession(user.id);
