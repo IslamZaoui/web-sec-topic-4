@@ -6,10 +6,12 @@ import authMiddleware from '@/middlewares/auth.middleware';
 
 import loginHandler from '@/handlers/login.handler';
 import logoutHandler from '@/handlers/logout.handler';
+import deleteUserHandler from '@/handlers/delete-user.handler';
 
 import homePage from '@/pages/home.page';
 import loginPage from '@/pages/login.page';
 import profilePage from '@/pages/profile.page';
+import adminPage from '@/pages/admin.page';
 
 const app = express();
 
@@ -27,10 +29,10 @@ app.use(express.static(path.resolve(__dirname, 'static')))
 	);
 
 // handlers
-app.post('/api/login', loginHandler()).post('/api/logout', logoutHandler());
+app.post('/api/login', loginHandler()).post('/api/logout', logoutHandler()).delete('/api/users/:id', deleteUserHandler());
 
 // server rendered pages
-app.get('/', homePage()).get('/login', loginPage()).get('/profile', profilePage());
+app.get('/', homePage()).get('/login', loginPage()).get('/profile', profilePage()).get('/admin', adminPage());
 
 const PORT = 3000;
 app.listen(PORT, () => {

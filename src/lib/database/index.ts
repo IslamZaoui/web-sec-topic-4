@@ -9,6 +9,9 @@ migrate(client);
 export const db = {
 	user: {
 		select: {
+			all: () => {
+				return client.prepare('SELECT * FROM users').all() as User[];
+			},
 			by: {
 				id: (id: number) =>
 					client.prepare('SELECT * FROM users WHERE id = ?').get(id) as User | null,
