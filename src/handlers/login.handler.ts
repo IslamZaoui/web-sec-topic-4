@@ -35,15 +35,15 @@ export default function loginHandler(): ExpressHandler {
 		const user = db.user.select.by.username(username);
 		if (!user) {
 			res.status(401).json({
-				code: 'INVALID_USERNAME',
-				message: 'Invalid username',
+				code: 'INVALID_CREDENTIALS',
+				message: 'Invalid username or password',
 			});
 			return;
 		}
 		if (user.password !== password) {
 			res.status(401).json({
-				code: 'INVALID_PASSWORD',
-				message: 'Invalid password',
+				code: 'INVALID_CREDENTIALS',
+				message: 'Invalid username or password',
 			});
 			return;
 		}
